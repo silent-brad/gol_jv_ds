@@ -42,7 +42,6 @@ public class GameController {
   public String index() throws Exception {
     JadeTemplate template = jade.getTemplate("templates/index");
     Map<String, Object> model = new HashMap<>();
-    model.put("boardSize", GameService.BOARD_SIZE);
     model.put("boardHtml", gameService.getCachedBoardHtml());
     return jade.renderTemplate(template, model);
   }

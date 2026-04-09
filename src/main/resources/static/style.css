@@ -1,0 +1,98 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  background: #111;
+  color: #eee;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+h1 {
+  font-size: 1.5rem;
+}
+p {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+.board {
+  display: grid;
+  grid-template-rows: repeat(50, 1fr);
+  grid-template-columns: repeat(50, 1fr);
+  width: min(90vw, 90vh);
+  height: min(90vw, 90vh);
+  border: 1px solid #333;
+}
+.tile {
+  border-right: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+.dead {
+  background: #1a1a1a;
+}
+.red {
+  background: #e74c3c;
+  transition: background 0.3s ease;
+}
+.blue {
+  background: #3498db;
+  transition: background 0.3s ease;
+}
+.green {
+  background: #2ecc71;
+  transition: background 0.3s ease;
+}
+.orange {
+  background: #e67e22;
+  transition: background 0.3s ease;
+}
+.fuchsia {
+  background: #e91e9c;
+  transition: background 0.3s ease;
+}
+.purple {
+  background: #9b59b6;
+  transition: background 0.3s ease;
+}
+footer {
+  padding: 1.5rem 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #888;
+}
+footer .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+footer a {
+  color: #ccc;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+footer svg {
+  vertical-align: -2px;
+}
+.tech-icon {
+  display: inline-flex;
+  align-items: center;
+}
+.tech-icon.datastar {
+  color: #ff6600;
+}
