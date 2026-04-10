@@ -6,8 +6,14 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
         jdk = pkgs.jdk21;
@@ -27,27 +33,23 @@
           '';
         };
 
-        packages.default = pkgs.stdenv.mkDerivation {
+        packages.default = maven.buildMavenPackage {
           pname = "game-of-life";
           version = "0.1.0";
           src = ./.;
 
-          nativeBuildInputs = [ maven jdk ];
+          mvnHash = "sha256-pyzF4ibvkQNiO1jU2YxJiUrkef69YeDZJ9+08wFKL8Q=";
+          mvnParameters = "-DskipTests";
 
-          buildPhase = ''
-            export JAVA_HOME=${jdk}
-            mvn package -DskipTests -o
-          '';
+          nativeBuildInputs = [ pkgs.makeWrapper ];
 
           installPhase = ''
             mkdir -p $out/bin $out/lib
             cp target/game-of-life-*.jar $out/lib/game-of-life.jar
-            cat > $out/bin/game-of-life <<EOF
-            #!/bin/sh
-            exec ${jdk}/bin/java -jar $out/lib/game-of-life.jar "\$@"
-            EOF
-            chmod +x $out/bin/game-of-life
+            makeWrapper ${jdk}/bin/java $out/bin/game-of-life \
+              --add-flags "-jar $out/lib/game-of-life.jar"
           '';
         };
-      });
+      }
+    );
 }

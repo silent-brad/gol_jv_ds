@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import starfederation.datastar.adapters.response.HttpServletResponseAdapter;
@@ -142,11 +143,8 @@ public class GameController {
 
   @PostMapping("/tap")
   @ResponseBody
-  public void tap(@RequestParam("id") int id, HttpServletRequest request) {
-    int userId = id; // use the cell id hash as a simple differentiator
-    // Derive a color from the session
-    String sessionId = request.getSession(true).getId();
-    int color = Game.colorForUser(sessionId.hashCode());
+  public void tap(@RequestParam("id") int id) {
+    int color = ThreadLocalRandom.current().nextInt(1, Game.COLORS.length);
     gameService.getGame().fillCross(id, color);
   }
 }

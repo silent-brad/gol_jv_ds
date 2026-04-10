@@ -6,4 +6,5 @@ target/
 .settings/
 .classpath
 .project
+result
 tmp
