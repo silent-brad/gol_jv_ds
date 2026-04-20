@@ -6,6 +6,8 @@ A real-time, interactive [[https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
 Click on the board to spawn cells. The simulation runs automatically at 5 ticks/second on a 50×50 grid with multi-color support.
 
+[[file:./game-of-life-datastar.gif]]
+
 * Tech Stack
 
 - *Java 21* — virtual threads for the game loop and SSE connections
