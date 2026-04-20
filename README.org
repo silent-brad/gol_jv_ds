@@ -1,0 +1,35 @@
+#+TITLE: Conway's Game of Life in Java/Datastar
+#+AUTHOR: Brad White
+#+DATE: 2026-04-09
+
+A real-time, interactive [[https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life][Conway's Game of Life]] built with Java, Spring Boot, Jinjava, and [[https://data-star.dev][Datastar]].
+
+Click on the board to spawn cells. The simulation runs automatically at 5 ticks/second on a 50×50 grid with multi-color support.
+
+* Tech Stack
+
+- *Java 21* — virtual threads for the game loop and SSE connections
+- *Spring Boot 3* — web framework
+- *Jinjava* — Jinja2 template engine for Java (from [[https://github.com/HubSpot/jinjava][HubSpot]])
+- *Datastar* — real-time UI updates via server-sent events
+- *Nix* — reproducible builds and NixOS deployment module
+
+* Running
+
+** With Nix
+
+#+begin_src sh
+nix develop --command mvn spring-boot:run
+#+end_src
+
+** With Maven
+
+#+begin_src sh
+mvn spring-boot:run
+#+end_src
+
+The server starts on http://localhost:8765.
+
+* License
+
+MIT

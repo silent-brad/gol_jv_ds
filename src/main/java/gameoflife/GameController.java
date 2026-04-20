@@ -1,15 +1,14 @@
 package gameoflife;
 
-import de.neuland.jade4j.Jade4J;
-import de.neuland.jade4j.JadeConfiguration;
-import de.neuland.jade4j.template.ClasspathTemplateLoader;
-import de.neuland.jade4j.template.JadeTemplate;
-import jakarta.annotation.PostConstruct;
+import com.hubspot.jinjava.Jinjava;
 import jakarta.servlet.AsyncContext;
 import jakarta.servlet.AsyncEvent;
 import jakarta.servlet.AsyncListener;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -24,27 +23,23 @@ import starfederation.datastar.utils.ServerSentEventGenerator;
 public class GameController {
 
   private final GameService gameService;
-  private JadeConfiguration jade;
+  private final Jinjava jinjava = new Jinjava();
+  private final String indexTemplate;
 
-  public GameController(GameService gameService) {
+  public GameController(GameService gameService) throws IOException {
     this.gameService = gameService;
-  }
-
-  @PostConstruct
-  public void init() {
-    jade = new JadeConfiguration();
-    jade.setTemplateLoader(new ClasspathTemplateLoader("UTF-8"));
-    jade.setPrettyPrint(false);
-    jade.setMode(Jade4J.Mode.HTML);
+    try (InputStream is =
+        getClass().getClassLoader().getResourceAsStream("templates/index.jinja")) {
+      this.indexTemplate = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+    }
   }
 
   @GetMapping("/")
   @ResponseBody
-  public String index() throws Exception {
-    JadeTemplate template = jade.getTemplate("templates/index");
+  public String index() {
     Map<String, Object> model = new HashMap<>();
     model.put("boardHtml", gameService.getCachedBoardHtml());
-    return jade.renderTemplate(template, model);
+    return jinjava.render(indexTemplate, model);
   }
 
   @GetMapping("/sse")

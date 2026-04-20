@@ -1,5 +1,5 @@
 {
-  description = "Conway's Game of Life - Java/Spring/Jade4J/Datastar";
+  description = "Conway's Game of Life - Java/Spring/Jinjava/Datastar";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -38,7 +38,7 @@
           version = "0.1.0";
           src = ./.;
 
-          mvnHash = "sha256-pyzF4ibvkQNiO1jU2YxJiUrkef69YeDZJ9+08wFKL8Q=";
+          mvnHash = "sha256-XsrRke++6VSpqSkL1KU4gStgqZN/zysIszOBpifSqCE=";
           mvnParameters = "-DskipTests";
 
           nativeBuildInputs = [ pkgs.makeWrapper ];
